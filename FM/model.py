@@ -32,16 +32,17 @@ class FM_Layer(Layer):
         
     def build(self, input_shape):
         self.w0 = self.add_weight(name='w0', shape=(1,),
-                                  initializer=tf.zeros_initializer(),
-                                  trainable=True)
-        self.w = self.add_weight(name='w', shape=(self.feature_length, 1),
-                                  initializer=tf.zeros_initializer(),
-                                  regularizer=l2(self.w_reg),
-                                  trainable=True)
-        self.V = self.add_weight(name='V', shape=(self.feature_length, self.k),
-                                  initializer=tf.zeros_initializer(),
-                                  regularizer=l2(self.v_reg),
-                                  trainable=True)
+                                initializer=tf.zeros_initializer(),
+                                trainable=True)
+        self.w0 = self.add_weight(name='w0', shape=(1,),)
+        # self.w = self.add_weight(name='w', shape=(self.feature_length, 1),
+        #                           initializer=tf.zeros_initializer(),
+        #                           regularizer=l2(self.w_reg),
+        #                           trainable=True)
+        # self.V = self.add_weight(name='V', shape=(self.feature_length, self.k),
+        #                           initializer=tf.zeros_initializer(),
+        #                           regularizer=l2(self.v_reg),
+        #                           trainable=True)
     
     def call(self, inputs, **kwargs):
         # mapping
