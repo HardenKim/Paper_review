@@ -32,18 +32,17 @@ class FM_Layer(Layer):
         
     def build(self, input_shape):
         self.w0 = self.add_weight(name='w0', shape=(1,),
-                                initializer=tf.zeros_initializer(),
-                                trainable=True)
-        self.w0 = self.add_weight(name='w0', shape=(1,),)
-        # self.w = self.add_weight(name='w', shape=(self.feature_length, 1),
-        #                           initializer=tf.zeros_initializer(),
-        #                           regularizer=l2(self.w_reg),
-        #                           trainable=True)
-        # self.V = self.add_weight(name='V', shape=(self.feature_length, self.k),
-        #                           initializer=tf.zeros_initializer(),
-        #                           regularizer=l2(self.v_reg),
-        #                           trainable=True)
-    
+                                  initializer=tf.zeros_initializer(),
+                                  trainable=True)
+        self.w = self.add_weight(name='w', shape=(self.feature_length, 1),
+                                 initializer=tf.zeros_initializer(),
+                                 regularizer=l2(self.w_reg),
+                                 trainable=True)
+        self.V = self.add_weight(name='V', shape=(self.feature_length, self.k),
+                                 initializer=tf.zeros_initializer(),
+                                 regularizer=l2(self.v_reg),
+                                 trainable=True)
+                                
     def call(self, inputs, **kwargs):
         # mapping
         inputs = inputs + tf.convert_to_tensor(self.index_mapping)
@@ -81,5 +80,4 @@ class FM(Model):
     def summary(self, **kwargs):
         sparse_inputs = Input(shape=(len(self.sparse_feature_columns),), dtype=tf.int32)
         Model(inputs=sparse_inputs, outputs=self.call(sparse_inputs)).summary()
-        
         
